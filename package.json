@@ -1,0 +1,20 @@
+{
+  "name": "E-Uni",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/PoisenvilleKid/E-Uni.git",
+  "author": "Cedric Mathis <clmathis@uh.edu>",
+  "license": "MIT",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.6.1"
+  },
+  "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "nodemon": "^1.19.1"
+  },
+  "scripts": {
+    "start": "nodemon app.js --exec babel-node --presets babel-preset-env"
+  }
+}
