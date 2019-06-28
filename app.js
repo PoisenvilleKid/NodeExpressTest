@@ -1,7 +1,9 @@
 import express from 'express';
 import path from 'path';
-import router from './Routes/book.route';
+import bookRouter from './Routes/book.route';
+import userRouter from './Routes/User.route';
 import bodyParser from 'body-parser';
+import db from './Service/dbConnect';
 
 // app variable to let us use express methods
 const app = express();
@@ -12,10 +14,11 @@ app.use(express.static(path.join(__dirname,'Public')));
 // Set these two up to be able to take JSON value
 // ***Important always put before your route values***
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 
 // Set up Pathway for all of our routes
-app.use(router);
+app.use(bookRouter);
+app.use(userRouter);
 
 /* Set Port Number and run server with yarn run start nodemon will
 */
