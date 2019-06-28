@@ -1,5 +1,6 @@
 import User from "../Models/User.Model";
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 mongoose.Promise = Promise;
 import { runInNewContext } from "vm";
 
@@ -31,6 +32,29 @@ exports.createUser = function(req, res) {
           res.send({success: false, result: err});
       });
 };
+
+// Method to Login a user and compare the hashed password
+// With the plaintext password entered in the body
+exports.loginUser = function(req,res) {
+  User.findOne({username : req.body.username})
+      .then(user => {
+        // This method compares the plaintext password with the hashed 
+        // password in the db, if we have a match give a 200 status code
+        // and enter the user... else give them a 401
+        bcrypt.compare(req.body.password, user.password,(err,result) => {
+          if(err) {
+            return res.status(401).send("Auth Failed");
+          }
+          if(result) {
+            return res.send({success: true, result: result});
+          }
+          return res.status(401).send("Auth Failed");
+        })
+      })
+      .catch(err => {
+        return res.send({success: false, result: err});
+    });
+}
 
 exports.getUser = function(req,res) {
     User.findOne({username : req.params.username})
